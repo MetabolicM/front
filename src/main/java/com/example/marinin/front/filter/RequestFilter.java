@@ -37,28 +37,15 @@ public class RequestFilter extends GenericFilterBean {
          * error - if logining throw exception - redirect to /login?error
          **/
 
-        System.out.println(accessType);
-        System.out.println(requestURI);
-        System.out.println(requestMethod);
-
-
         if (requestURI.equals("/")) {
-
             if (accessType.equals("invalid")) {
-
                 if (requestMethod.equals("GET")) {
                     chain.doFilter(req, res);
                 } else if (requestMethod.equals("POST")) {
-
                     LoginResponse loginResponse = doLogin(request);
-
                     if (loginResponse.getToken() != null) {
-                        System.out.println("LOGIN RESPONSE : " + loginResponse.getAccessType() + " _-_ " + loginResponse.getToken());
                         response.addCookie(new Cookie("jwtToken", loginResponse.getToken()));
-                        //response.addCookie();request.getCookies();
-
                         response.sendRedirect("/" + loginResponse.getAccessType());
-
                     } else {
                         response.sendRedirect("/");
                     }
@@ -66,7 +53,7 @@ public class RequestFilter extends GenericFilterBean {
             } else {
                 response.sendRedirect("/" + accessType);
             }
-        } else if (requestURI.equals("/user")) { //if (requestURI.equals("/login")){
+        } else if (requestURI.equals("/user")) {
             if (accessType.equals("user") || accessType.equals("admin")) {
                 chain.doFilter(req, res);
             } else {
@@ -82,8 +69,7 @@ public class RequestFilter extends GenericFilterBean {
             }
         } else if (requestURI.startsWith("/js")) {
             chain.doFilter(req, res);
-        } else if (requestURI.equals("/logout")){
-            System.out.println("LOGOUT");
+        } else if (requestURI.equals("/logout")) {
             Cookie cookie = new Cookie("jwtToken", "");
             cookie.setMaxAge(0);
             response.addCookie(cookie);
@@ -112,14 +98,12 @@ public class RequestFilter extends GenericFilterBean {
         } catch (Exception e) {
             loginResponse.setAccessType("error");
         }
-
         return loginResponse;
     }
 
     private String getTypeOfAccess(HttpServletRequest request) {
         String accessType;
         String token = null;
-
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -137,16 +121,14 @@ public class RequestFilter extends GenericFilterBean {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Cookie", "jwtToken=" + token);
             HttpEntity<String> httpEntity = new HttpEntity<>(headers);
-
             try {
                 ResponseEntity<String> response = restTemplate.exchange("http://localhost:8081/auth/access",
                         HttpMethod.GET, httpEntity, String.class);
-                accessType = response.getBody();//???????????????????????????????
+                accessType = response.getBody();
             } catch (Exception e) {
                 accessType = "invalid";
             }
         }
-
         return accessType;
     }
 }

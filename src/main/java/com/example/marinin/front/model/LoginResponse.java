@@ -1,5 +1,8 @@
 package com.example.marinin.front.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class LoginResponse {
     private String token;
     private String accessType;
