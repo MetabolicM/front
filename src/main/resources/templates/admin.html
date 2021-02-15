@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script type="text/javascript" src="/js/admin.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            overflow: auto; /* добавить полосу прокрутки */
+        }
+
+        main {
+            min-height: 100%;
+        }
+
+        .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+            background-color: #f2f2f2;
+        }
+
+        .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+            background-color: white;
+        }
+    </style>
+
+    <title>ADMIN</title>
+
+</head>
+<body>
+
+<header class="navbar navbar-expand-md navbar-dark bg-dark ">
+    <div class="navbar-nav mr-auto mb-0">
+        <h5 class="text-light bg-dark mr-2 font-weight-bold" id="headerMail"><span>EMAIL_HERE</span></h5>
+        <h5 class="text-light bg-dark mr-2">with roles</h5>
+        <h5 class="text-white mr-2 font-weight-bold" id="headerRole"><span>ROLES_HERE</span></h5>
+    </div>
+    <div class="navbar-nav mt-2 mt-md-0">
+        <a class="nav-link" href="/logout">Logout</a>
+    </div>
+</header>
+
+<div class="row bg-light h-100">
+    <!-- left navbar-->
+    <div class="col-lg-2 bg-white pt-4 w-100">
+        <nav>
+            <a href="/admin" class="list-group-item list-group-item-action active">Admin</a>
+            <a href="/user" class="list-group-item list-group-item-action">User</a>
+        </nav>
+    </div>
+
+    <!-- central panel-->
+    <div class="col-lg-10 bg-light pt-4 pr-5 w-100">
+        <main>
+
+            <!-- head of central panel-->
+            <h1>Admin Panel</h1>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#all" role="tab"
+                       aria-controls="home" aria-selected="true">
+                        User Table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#new" role="tab"
+                       aria-controls="profile" aria-selected="false">
+                        New User</a>
+                </li>
+            </ul>
+
+            <!-- panel-->
+            <div class="tab-content" id="myTabContent">
+
+                <!-- Tab With All Users Table start-->
+                <div class="tab-pane fade show active border rounded" id="all" role="tabpanel"
+                     aria-labelledby="home-tab">
+                    <h3 class="ml-4">All Users</h3>
+                    <div class=" bg-white p-4 border border-left-0 border-right-0 border-bottom-0">
+                        <table class="table table-sm table-striped bg-white" id="common">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">LastName</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Password</th>
+                                <th scope="col">E-Mail</th>
+                                <th scope="col">Roles</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <br>
+
+                    <br>
+
+                </div>
+                <!-- tab with table END-->
+
+                <!-- tab for create new user START-->
+                <div class="tab-pane fade border rounded" id="new" role="tabpanel" aria-labelledby="profile-tab">
+                    <h3 class="ml-4">All Users</h3>
+                    <div class=" bg-white p-4 border border-left-0 border-right-0 border-bottom-0">
+
+                        <form class="row justify-content-center mx-auto" style="width: 270px;" id="new_form">
+                            <label class="text-center font-weight-bold" style="width: 270px;" for="new-name">Enter
+                                name: </label>
+                            <input class="mb-3" style="width: 270px;" type="text" id="new-name"/>
+
+                            <label class="text-center font-weight-bold" style="width: 270px;" for="new-lastName">Enter
+                                lastname: </label>
+                            <input class="mb-3" style="width: 270px;" type="text" id="new-lastName"/>
+
+                            <label class="text-center font-weight-bold" style="width: 270px;" for="new-age">Enter
+                                age: </label>
+                            <input class="mb-3" style="width: 270px;" type="text" id="new-age"/>
+
+                            <label class="text-center font-weight-bold" style="width: 270px;" for="new-password">Enter
+                                password: </label>
+                            <input class="mb-3" style="width: 270px;" type="text" id="new-password"/>
+
+                            <label class="text-center font-weight-bold" style="width: 270px;" for="new-email">Enter
+                                Email: </label>
+                            <input class="mb-3" style="width: 270px;" type="text" id="new-email"/>
+
+
+                            <label class="text-center font-weight-bold" style="width: 270px;" for="new-roles">Choose
+                                roles:</label>
+                            <select class="mb-3" style="width: 270px;" id="new-roles" size="3" multiple="multiple">
+                            </select>
+                            <button type="button" class="btn btn btn-success" onclick="doNew()">CREATE</button>
+                        </form>
+                    </div>
+                </div>
+                <!-- tab for create new user END-->
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- EDIT MODAL WINDOW BEGIN-->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                <button type="button" class="close" onclick="closeModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="row justify-content-center mx-auto" style="width: 270px;" id="edit_form">
+
+                    <div class="form-group">
+                        <label for="user-id" class="text-center font-weight-bold" style="width: 270px;">ID</label>
+                        <input type="text" class="form-control" id="user-id" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user-name" class="text-center font-weight-bold" style="width: 270px;">Name</label>
+                        <input type="text" class="form-control" id="user-name">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="user-lastName" class="text-center font-weight-bold"
+                               style="width: 270px;">Lastname</label>
+                        <input type="text" class="form-control" id="user-lastName">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user-age" class="text-center font-weight-bold" style="width: 270px;">Age</label>
+                        <input type="text" class="form-control" id="user-age">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user-password" class="text-center font-weight-bold"
+                               style="width: 270px;">Password</label>
+                        <input type="text" class="form-control" id="user-password">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user-email" class="text-center font-weight-bold" style="width: 270px;">Email</label>
+                        <input type="text" class="form-control" id="user-email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="user-roles" class="text-center font-weight-bold" style="width: 270px;">Choose
+                            roles:</label>
+                        <br/>
+                        <select class="form-control" id="user-roles" size="3" multiple="multiple">
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <input type="submit" class="btn btn-primary" id="doButton" onclick="doEdit()" value="Edit"/>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" id="backdrop" style="display: none;"></div>
+
+<!-- EDIT MODAL WINDOW  END-->
+
+</body>
+</html>

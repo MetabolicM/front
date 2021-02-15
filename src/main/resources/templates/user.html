@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script type="text/javascript" src="/js/user.js"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        body {
+            overflow: auto; /* добавить полосу прокрутки */
+        }
+
+        main {
+            min-height: 100%;
+        }
+
+        .table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+            background-color: #f2f2f2;
+        }
+
+        .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+            background-color: white;
+        }
+    </style>
+
+    <title>User Page</title>
+
+</head>
+<body>
+
+<header class="navbar navbar-expand-md navbar-dark bg-dark ">
+    <div class="navbar-nav mr-auto mb-0">
+        <h5 class="text-light bg-dark mr-2 font-weight-bold" id="headerMail"><span>EMAIL_HERE</span></h5>
+        <h5 class="text-light bg-dark mr-2">with roles</h5>
+        <h5 class="text-white mr-2 font-weight-bold" id="headerRole"><span>ROLES_HERE</span></h5>
+    </div>
+    <div class="navbar-nav mt-2 mt-md-0">
+        <a class="nav-link" href="/logout">Logout</a>
+    </div>
+</header>
+
+<div class="row bg-light h-100">
+    <!-- left navbar-->
+    <div class="col-lg-2 bg-white pt-4 w-100">
+        <nav>
+            <a href="/admin" class="list-group-item list-group-item-action " id="admlink">Admin</a>
+            <a href="/user" class="list-group-item list-group-item-action active">User</a>
+        </nav>
+    </div>
+
+    <!-- central panel-->
+    <div class="col-lg-10 bg-light pt-4 pr-5 w-100">
+        <main>
+
+            <!-- head of central panel-->
+            <h1>User Information Page</h1>
+
+            <!-- Current User Table start-->
+            <div class="tab-pane fade show active border rounded" id="all" role="tabpanel" aria-labelledby="home-tab">
+                <h3 class="ml-4">About User</h3>
+                <div class=" bg-white p-4 border border-left-0 border-right-0 border-bottom-0">
+                    <table class="table table-sm table-striped bg-white" id="current">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">LastName</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Password</th>
+                            <th scope="col">E-Mail</th>
+                            <th scope="col">Roles</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+</body>
+</html>
