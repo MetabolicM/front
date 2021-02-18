@@ -26,9 +26,19 @@ async function getCurrent() {
         let response = await fetch('http://localhost:8081/rest/current',
             {
                 method: 'GET',
-                headers: {'Content-Type': 'application/json;charset=utf-8'},
-                credentials: 'include'}
-);
+                headers: {'Content-Type': 'application/json;charset=utf-8', 'Authorization':localStorage.getItem('jwt')},});
+
+        if (response.ok){
+            if ( usersArray=='err') {
+                document.location.href = 'http://localhost:8080/user';
+            }else {
+                let user = await response.json();
+                currentUser = user;
+            }
+        }else {
+            document.location.href = 'http://localhost:8080/';
+        }
+
         let user = await response.json();
         currentUser = user;
     } catch (error) {
@@ -42,10 +52,13 @@ async function getAllUsers() {
         let response = await fetch('http://localhost:8081/rest/users',
             {
                 method: 'GET',
-                headers: {'Content-Type': 'application/json;charset=utf-8'},
-                credentials: 'include'});
-        let users = await response.json();
-        usersArray = users;
+                headers: {'Content-Type': 'application/json;charset=utf-8', 'Authorization':localStorage.getItem('jwt')},});
+        if (response.ok){
+            let users = await response.json();
+            usersArray = users;
+        }else {
+            usersArray = 'err';
+        }
     } catch (error) {
         alert(error + " in getAllUsers()");
     }
@@ -57,8 +70,7 @@ async function getAllRoles() {
         let response = await fetch('http://localhost:8081/rest/roles',
             {
                 method: 'GET',
-                headers: {'Content-Type': 'application/json;charset=utf-8'},
-                credentials: 'include'});
+                headers: {'Content-Type': 'application/json;charset=utf-8', 'Authorization':localStorage.getItem('jwt')},});
         let roles = await response.json();
         rolesArray = roles;
     } catch (error) {
@@ -224,9 +236,7 @@ async function doDelete(trueUserID) {
     try {
         let response = await fetch('http://localhost:8081/rest/' + trueUserID, {
             method: 'DELETE',
-            headers: {'Content-Type': 'application/json;charset=utf-8'},
-            credentials: 'include'
-        });
+            headers: {'Content-Type': 'application/json;charset=utf-8', 'Authorization':localStorage.getItem('jwt')},});
         let users = await response.json();
         usersArray = users;
         await fillAdminTable();
@@ -249,11 +259,12 @@ async function doEdit(trueUserID) {
             }
         }
     }
+
     try {
         let response = await fetch('http://localhost:8081/rest/' + trueUserID, {
-            method: 'PATCH', headers: {'Content-Type': 'application/json;charset=utf-8'},
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json;charset=utf-8', 'Authorization':localStorage.getItem('jwt')},
             body: JSON.stringify(transferUser),
-            credentials: 'include'
         });
         let users = await response.json();
         usersArray = users;
@@ -282,9 +293,8 @@ async function doNew() {
         let response = await fetch('http://localhost:8081/rest',
             {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json;charset=utf-8', 'Authorization':localStorage.getItem('jwt')},
                 body: JSON.stringify(newUser),
-                credentials: 'include'
             });
         let users = await response.json();
         usersArray = users;
@@ -300,4 +310,9 @@ function clearNew() {
     for (let j = 1; j < 6; j++) {
         document.getElementById('new-' + usersKey[j]).value = null;
     }
+}
+
+function doLogout(){
+    localStorage.setItem('jwt', '');
+    document.location.href = 'http://localhost:8080/';
 }

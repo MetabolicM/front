@@ -9,13 +9,13 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
-
+    <script type="text/javascript" src="/js/login.js"></script>
 
     <title>Login page</title>
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" action="/">
+    <form class="form-signin" > <!--method="post" action="/"-->
         <h2 class="form-signin-heading">Please sign in</h2>
         <p>
             <label for="username" class="sr-only">Username</label>
@@ -28,7 +28,8 @@
                    required="">
         </p>
         <input name="_csrf" type="hidden" value="48b8468b-1094-4f8a-af76-d46640227881">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button type="button" class="btn btn-lg btn-primary btn-block" onclick="doLogin()">Sign in</button>
+        <!--<button class="btn btn-lg btn-primary btn-block" type="submit " onclick="doLogin()">Sign in</button>-->
     </form>
 </div>
 </body>

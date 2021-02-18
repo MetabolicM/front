@@ -25,10 +25,15 @@ async function getCurrent() {
         let response = await fetch('http://localhost:8081/rest/current',
             {
                 method: 'GET',
-                headers: {'Content-Type': 'application/json;charset=utf-8'},
-                credentials: 'include'});
-        let user = await response.json();
-        currentUser = user;
+                headers: {'Content-Type': 'application/json;charset=utf-8', 'Authorization':localStorage.getItem('jwt')}});
+
+        if (response.ok){
+            let user = await response.json();
+            currentUser = user;
+        }else {
+            document.location.href = 'http://localhost:8080/';
+        }
+
     } catch (error) {
         alert(error);
     }
@@ -64,4 +69,8 @@ async function fillCurrentTable() {
             loneCell.innerText = roles;
         }
     }
+}
+function doLogout(){
+    localStorage.setItem('jwt', '');
+    document.location.href = 'http://localhost:8080/';
 }
